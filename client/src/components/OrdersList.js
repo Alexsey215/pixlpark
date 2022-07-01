@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-
-function OrdersList() {
-    const [orders, setOrders] = useState(null);
-    useEffect(() => {
-        fetch('/orders')
-            .then((res) => res.json())
-            .then((res) => setOrders(res.message))
-    }, []);
-
+import { Container, Row, Col, Card } from 'react-bootstrap'
+import OrderCard from './OrderCard'
+function OrdersList({ orders }) {
     return (
-        <div>
-            {
-                !orders ? 'Loading...' : orders
-            }
-        </div>
+        <Container>
+            <Row>
+                {
+                    !orders ? 'Loading...' : orders.map((order) =>
+                        <Col key={order.CustomId} className='m-2'>
+                            <OrderCard order={order} />
+                        </Col>
+                    )
+                }
+            </Row>
+        </Container>
     );
 }
 
